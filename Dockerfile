@@ -1,8 +1,12 @@
 FROM ubuntu:20.04
 
-# Apache 소스 설치를 위한 패키지
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y apache2 apache2-dev build-essential wget
+# Set the timezone to avoid interactive selection during tzdata installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update the package lists and install tzdata and other packages
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y tzdata \
+    && apt-get install -y apache2 apache2-dev build-essential wget
 
 # Install mod_jk
 RUN wget -P ~ https://dlcdn.apache.org/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.49-src.tar.gz --no-check-certificate \
