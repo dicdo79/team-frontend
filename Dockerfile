@@ -5,8 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update the package lists and install tzdata and other packages
 RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y tzdata \
-    && apt-get install -y apache2 apache2-dev build-essential wget
+     && apt-get install -y tzdata \
+     && apt-get install -y apache2 apache2-dev build-essential wget
 
 # Install mod_jk
 RUN wget -P ~ https://dlcdn.apache.org/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.49-src.tar.gz --no-check-certificate \
@@ -16,9 +16,11 @@ RUN wget -P ~ https://dlcdn.apache.org/tomcat/tomcat-connectors/jk/tomcat-connec
       && cd ~/tomcat-connectors-1.2.49-src/native/ \
       && ./configure --with-apxs=/usr/bin/apxs \
       && make && make install
-      && mkdir /etc/apache2/jk.conf
-      && mkdir /etc/apache2/workers.properties
-      && mkdir /etc/apache2/uri.properties
+
+# Create jk.conf, workers.properties, uri.properties files
+RUN touch /etc/apache2/jk.conf \
+     && touch /etc/apache2/workers.properties \
+     && touch /etc/apache2/uri.properties
 
 # Copy enable and load httpd conf files that it locate conf/sites
 ADD ./conf/httpd.conf /etc/apache2/httpd.conf 
