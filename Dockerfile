@@ -19,7 +19,7 @@ RUN wget -P ~ https://dlcdn.apache.org/tomcat/tomcat-connectors/jk/tomcat-connec
 
 # Copy enable and load httpd conf files that it locate conf/sites
  
-ADD ./conf/mod_jk.conf /etc/apache2/mods-available/jk.conf
+ADD ./conf/mod_jk.conf /etc/apache2/jk.conf
 ADD ./conf/workers.properties /etc/apache2/workers.properties
 ADD ./conf/uri.properties /etc/apache2/uri.properties
 
